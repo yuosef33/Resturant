@@ -16,10 +16,10 @@ public interface CategoryMapper {
 
     Category toEntity(CategoryDto categoryDto);
 
-    @Mapping(target = "product", ignore = true)
+//@Mapping(target = "product", ignore = true)
     CategoryDto  toDto (Category category);
 
-
+  //  @Mapping(target = "product", ignore = true)
     List<CategoryDto> toListDto(List<Category> categorys);
 
 

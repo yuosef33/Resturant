@@ -1,5 +1,6 @@
 package com.project.resturant.Dtos;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.project.resturant.model.Category;
 import lombok.Getter;
@@ -19,6 +20,6 @@ public class ProductDto {
     private String description;
 
     private Float price;
-
+@JsonIgnore
     private Category category;
 }

@@ -9,6 +9,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 @Service
 public class CategoryServiceImpl implements CategoryService {
@@ -25,13 +26,30 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public List<CategoryDto> getAllCategorys() {
-      return CategoryMapper.categorymapper.toListDto(categoryDao.findAll());
-
+       List<Category> categorys= categoryDao.findAllByOrderByName();
+     return toListDto(categorys);
+//return CategoryMapper.categorymapper.toListDto(categoryDao.findAllByOrderByName());
     }
 
     @Override
     public CategoryDto getCategoryByName(String name) {
         return CategoryMapper.categorymapper.toDto(categoryDao.findByName(name));
     }
+
+
+    List<CategoryDto> toListDto(List<Category>categories){
+        List<CategoryDto> categoriesDto=new ArrayList<>();
+        for(Category category:categories){
+          CategoryDto categoryDto=new CategoryDto();
+          categoryDto.setId(category.getId());
+          categoryDto.setFlag(category.getFlag());
+          categoryDto.setName(category.getName());
+          categoryDto.setLogoPath(category.getLogoPath());
+          categoryDto.setProduct(null);
+            categoriesDto.add(categoryDto);
+        }
+        return categoriesDto;
+    }
+
 
 }

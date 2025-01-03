@@ -23,21 +23,35 @@ productService.addProduct(productDto);
         return ResponseEntity.created(URI.create("/add_Product")).build();
     }
 
-    @GetMapping("/GetAllProduct")
-    ResponseEntity<List<ProductDto>> getAllProducts(){
-        return ResponseEntity.ok(productService.getAllProducts());
+    @GetMapping("/GetAllProduct/pageNumber/{pageNumber}/pageSize/{pageSize}")
+    ResponseEntity<List<ProductDto>> getAllProducts(@PathVariable("pageNumber") int pageNumber,@PathVariable("pageSize")int pageSize){
+        return ResponseEntity.ok(productService.getAllProducts(pageNumber,pageSize));
     }
 
 
-@GetMapping("/GetAllproductsById")
-    ResponseEntity <List<ProductDto>> getAllProductsById(@RequestParam Long id){
-        return ResponseEntity.ok(productService.getAllProductsByCategoryId(id));
+@GetMapping("/GetAllproductsByCategoryId/{id}/pageNumber/{pageNumber}/pageSize/{pageSize}")
+    ResponseEntity <List<ProductDto>> getAllProductsById(@PathVariable("id") Long id,@PathVariable("pageNumber") int pageNumber,@PathVariable("pageSize")int pageSize){
+        return ResponseEntity.ok(productService.getAllProductsByCategoryId(id,pageNumber,pageSize));
 }
 
 
-    @GetMapping("/searchBynameOrDesc")
-    ResponseEntity <List<ProductDto>> searchBynameOrDesc(@RequestParam String search) throws SystemException {
-        return ResponseEntity.ok(productService.searchBynameOrDesc(search));
+    @GetMapping("/searchBynameOrDesc/{search}/pageNumber/{pageNumber}/pageSize/{pageSize}")
+    ResponseEntity <List<ProductDto>> searchBynameOrDesc(@PathVariable("search") String search,@PathVariable("pageNumber") int pageNumber,@PathVariable("pageSize")int pageSize) throws SystemException {
+        return ResponseEntity.ok(productService.searchBynameOrDesc(search,pageNumber,pageSize));
     }
 
+    @GetMapping("/FindProductSize")
+    ResponseEntity <Integer> findProductSize()  {
+        return ResponseEntity.ok(productService.findAllProductSize());
+    }
+    @GetMapping("/FindProductSizeByCategoryId/{id}")
+    ResponseEntity <Integer> findProductSize(@PathVariable("id") Long id)  {
+        return ResponseEntity.ok(productService.findAllProductSizeByCategoryId(id));
+    }
+
+    @GetMapping("/FindProductSizeByKey/{key}")
+    ResponseEntity <Integer> findProductSize(@PathVariable("key") String key)  {
+        return ResponseEntity.ok(productService.findAllProductSizeByKey(key));
+    }
 }
+
